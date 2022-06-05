@@ -1,4 +1,5 @@
 # https://docs.python.org/3/library/itertools.html#itertools.permutations
+# http://mech.math.msu.su/~shvetz/54/inf/perl-examples/PerlExamples_Permutations_Ideas.xhtml
 import itertools
 def permutations1(iterable, r=None):
     # permutations('ABCD', 2) --> AB AC AD BA BC BD CA CB CD DA DB DC
@@ -34,12 +35,10 @@ beauty = 0
 for i in itertools.permutations(list):
     sum = 0
     sum_list = [x for x in i]
-    mult = 1
-    j = 0
-    while mult <= n:
-        sum = sum + sum_list[j] * mult
-        mult = mult + 1
-        j = j + 1
+    j_index = 0
+    while j_index < n:
+        sum = sum + sum_list[j_index] * (j_index + 1)
+        j_index = j_index + 1
     beauty_list.append(sum)
 
 for i in beauty_list:
