@@ -30,35 +30,44 @@ while True:
     except:
         print(error)
         continue
-k = inputter_int('How many minutes required for the work: ',error,1,m/2,0)
+k = inputter_int('How many minutes required for the work: ', error, 1, m/2, 0)
 
 trains = {0:[0,0]}
 i = 0
 while i < n:
     dep_i = int(i+1)
-    dep_h_desc = ('Train #', i + 1, 'departure hour: ')
-    dep_m_desc = ('Train #', i + 1, 'departure minute: ')
-    dep_h = inputter_int(dep_h_desc, error, 0, h, h)
-    dep_m = inputter_int(dep_m_desc, error, 0, m, m)
+    dep_h_desc = f"Train # {i + 1} departure hour: "
+    dep_m_desc = f"Train # {i + 1} departure minute: "
+    dep_h = inputter_int(str(dep_h_desc), error, 0, h, h)
+    dep_m = inputter_int(str(dep_m_desc), error, 0, m, m)
     trains[dep_i] = [dep_h, dep_m]
     i = i + 1
 print(trains)
 
-work_time_start = {1: 0, 2: int(m/2)}
 def work_timing(i):
+    work_time_start = {1: 0, 2: int(m / 2)}
     work_time_start[1] = (work_time_start[1] + i)
     work_time_start[2] = (work_time_start[2] + i)
     while work_time_start[1] >= m / 2:
         work_time_start[1] = int(work_time_start[1] - m / 2)
         work_time_start[2] = int(work_time_start[2] - m / 2)
     return work_time_start
-j = 0
-corr_time_start = work_timing(j)
-busy_minutes = [x for x in range(corr_time_start[1]+1,corr_time_start[1]+k-1,1)] + \
-               [x for x in range(corr_time_start[2]+1,corr_time_start[2]+k-1,1)]
 
-for minute in busy_minutes:
-    if minute >= m:
-        busy_minutes[busy_minutes.index(minute)] = minute - m
+def find_out_busy_munutes(j):
+    corr_time_start = work_timing(j)
+    busy_minutes = [x for x in range(corr_time_start[1] + 1, corr_time_start[1] + k - 1, 1)] + \
+                   [x for x in range(corr_time_start[2] + 1, corr_time_start[2] + k - 1, 1)]
+    for minute in busy_minutes:
+        if minute >= m:
+            busy_minutes[busy_minutes.index(minute)] = minute - m
+    return busy_minutes
 
-print(busy_minutes)
+x = find_out_busy_munutes(0)
+
+for i in trains:
+    if i != 0:
+        for minute in x:
+            if minute == trains.get(i)[1]:
+                print(trains.get(i)[0])
+    else:
+        continue
