@@ -61,14 +61,15 @@ def find_out_busy_munutes(j):
             busy_minutes[busy_minutes.index(minute)] = minute - m
     return busy_minutes
 
-inconvenient_trains = []
+start_minute_to_inconvenient_hash = {}
 
 for first_work_starts_minute in range(0,m+1,1):
-    print(first_work_starts_minute)
-    x = find_out_busy_munutes(first_work_starts_minute)
-    print(x)
+    inconvenient_trains = []
     for i in range(1,n+1,1):
-        for work_minute in x:
+        for work_minute in find_out_busy_munutes(first_work_starts_minute):
             if trains.get(i)[1] == work_minute:
-                print(i)
-    print(f"That's it \n\n")
+                inconvenient_trains.append(i)
+    start_minute_to_inconvenient_hash[first_work_starts_minute] = [x for x in inconvenient_trains]
+
+print(start_minute_to_inconvenient_hash)
+
