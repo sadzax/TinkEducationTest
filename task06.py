@@ -42,7 +42,6 @@ while i < n:
     dep_m = inputter_int(str(dep_m_desc), error, 0, m, m)
     trains[dep_i] = [dep_h, dep_m]
     i = i + 1
-print(trains)
 
 def work_timing(i):
     work_time_start = {1: 0, 2: int(m / 2)}
@@ -71,5 +70,13 @@ for first_work_starts_minute in range(0,m+1,1):
                 inconvenient_trains.append(i)
     start_minute_to_inconvenient_hash[first_work_starts_minute] = [x for x in inconvenient_trains]
 
-print(start_minute_to_inconvenient_hash)
+def find_t_final():
+    t_final = 0
+    for i in start_minute_to_inconvenient_hash:
+        if len(start_minute_to_inconvenient_hash.get(i)) < len(start_minute_to_inconvenient_hash.get(t_final)):
+            t_final = i
+    return t_final
 
+print(len(start_minute_to_inconvenient_hash.get(find_t_final())), find_t_final())
+for i in start_minute_to_inconvenient_hash.get(find_t_final()):
+    print(i)
